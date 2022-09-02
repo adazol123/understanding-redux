@@ -45,6 +45,6 @@ const storeSlice = createSlice({
   },
 });
 
-export const { incremented, decremented, amountAdded, toggleState } =
+export const { incremented, decremented, amountAdded, reset, toggleState } =
   storeSlice.actions;
 export default storeSlice.reducer;
