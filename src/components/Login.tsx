@@ -1,5 +1,6 @@
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import React from 'react'
-import { auth, signInWithEmailAndPassword, updateProfile } from '../api/firebase'
+import { auth } from '../api/firebase'
 import { login } from '../features/user/user-auth-slice';
 import { useAppDispatch } from './../app/hooks';
 
@@ -12,6 +13,8 @@ interface CredentialProps {
 }
 
 const Login = () => {
+    const dispatch = useAppDispatch()
+
     const [credentials, setCredentials] = React.useState<Partial<CredentialProps>>({
         email: undefined,
         password: undefined,
@@ -20,7 +23,6 @@ const Login = () => {
     })
     console.log('login is rendering ...')
 
-    const dispatch = useAppDispatch()
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault()
