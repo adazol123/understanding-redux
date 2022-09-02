@@ -7,7 +7,6 @@ import { logout } from '../features/user/user-auth-slice';
 const ChildComponent = () => {
     const value = useAppSelector(state => state.counter.store.value);
     const user = useAppSelector(state => state.user.user)
-
     const dispatch = useAppDispatch();
     console.log('child is rendering...')
     if (!user) return <div>Loading ...</div>
