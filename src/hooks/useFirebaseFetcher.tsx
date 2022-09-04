@@ -10,7 +10,7 @@ enum StatusLike {
     failed = "failed",
 }
 
-const useFirebaseFetcher = <T extends keyof typeof StatusLike, K>(status: T, fetcher: AsyncThunkAction<K, void, {}>) => {
+const useFirebaseFetcher = <S extends keyof typeof StatusLike, A>(status: S, fetcher: AsyncThunkAction<A, void, {}>) => {
     const dispatch = useAppDispatch()
     useEffect(() => {
         if (status === 'idle') {
@@ -19,4 +19,4 @@ const useFirebaseFetcher = <T extends keyof typeof StatusLike, K>(status: T, fet
     }, [status, dispatch])
 }
 
-export default useFirebaseFetcher
+export { useFirebaseFetcher }

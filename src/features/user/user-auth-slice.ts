@@ -36,7 +36,17 @@ let initialState: UserProps = {
 export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
   return new Promise<ModifiedUserProp>((resolve) => {
     let unsub = onAuthStateChanged(auth, (currentUser) => {
-      resolve(currentUser as ModifiedUserProp);
+      if (currentUser) {
+        resolve({
+          displayName: currentUser.displayName,
+          email: currentUser.email,
+          emailVerified: currentUser.emailVerified,
+          phoneNumber: currentUser.phoneNumber,
+          providerId: currentUser.providerId,
+          uid: currentUser.uid,
+          photoURL: currentUser.photoURL,
+        });
+      }
       unsub();
     });
   });
