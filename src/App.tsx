@@ -9,26 +9,15 @@ import ChildComponent from './components/ChildComponent'
 import Login from './components/Login'
 import { onAuthStateChanged } from 'firebase/auth'
 import { fetchProducts, selectAllProducts } from './features/shop/products-slice'
+import useFirebaseFetcher from './hooks/useFirebaseFetcher'
 function App() {
   const user = useAppSelector(selectUser)
   let productStatus = useAppSelector(state => state.shop.status)
   let authStatus = useAppSelector(state => state.auth.status)
-  const dispatch = useAppDispatch();
 
+  useFirebaseFetcher(productStatus, fetchProducts())
 
-  useEffect(() => {
-    if (productStatus === 'idle') {
-      dispatch(fetchProducts())
-    }
-  }, [productStatus, dispatch])
-
-  useEffect(() => {
-    if (authStatus === 'idle') {
-      dispatch(fetchUser())
-    }
-
-  }, [authStatus, dispatch])
-
+  useFirebaseFetcher(authStatus, fetchUser())
 
   return (
     <div className=" w-full">

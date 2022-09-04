@@ -55,7 +55,7 @@ const userAuthSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchUser.pending, (state, action) => {
+      .addCase(fetchUser.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
@@ -73,4 +73,9 @@ export const { login, logout } = userAuthSlice.actions;
 
 export default userAuthSlice.reducer;
 
+/**
+ *
+ * @param state
+ * @returns
+ */
 export const selectUser = (state: RootState) => state.auth.user;
