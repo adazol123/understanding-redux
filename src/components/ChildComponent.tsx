@@ -5,26 +5,15 @@ import { auth, docQuery } from '../api/firebase';
 import { logout } from '../features/user/user-auth-slice';
 import { fetchProduct } from '../features/store/product-slice';
 import { onSnapshot } from 'firebase/firestore';
+import { selectAllProducts } from '../features/shop/products-slice';
 
 
 const ChildComponent = () => {
     const dispatch = useAppDispatch();
 
     const value = useAppSelector(state => state.counter.store.value);
-    const user = useAppSelector(state => state.user.user)
-    const products = useAppSelector(state => state.store.products)
-
-    React.useEffect(() => {
-        console.log('rendering child...')
-        let productUnsubscribe = onSnapshot(docQuery, (querySnapshot) => {
-            let items = querySnapshot.docs.map(item => item.data())
-            dispatch(fetchProduct(items))
-        })
-        return () => {
-            console.log('unmounted!')
-            productUnsubscribe()
-        }
-    }, [])
+    const user = useAppSelector(state => state.auth.user)
+    const products = useAppSelector(selectAllProducts)
 
     if (!user) return <div>Loading ...</div>
     return (

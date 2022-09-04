@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "../features/store/store-slice";
 import userReducer from "../features/user/user-auth-slice";
 import productReducer from "../features/store/product-slice";
+import shopProductReducer from "../features/shop/products-slice";
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
-    user: userReducer,
+    auth: userReducer,
     store: productReducer,
+    shop: shopProductReducer,
 
     // testing api fetching on middleware
     // [apiSlice.reducerPath]: apiSlice.reducer,

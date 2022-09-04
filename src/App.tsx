@@ -4,32 +4,30 @@ import './App.css'
 import { useAppDispatch, useAppSelector } from './app/hooks'
 import { incremented, decremented, amountAdded, toggleState } from './features/store/store-slice'
 import { auth } from './api/firebase'
-import { login, logout } from './features/user/user-auth-slice'
+import { fetchUser, login, logout, selectUser } from './features/user/user-auth-slice'
 import ChildComponent from './components/ChildComponent'
 import Login from './components/Login'
 import { onAuthStateChanged } from 'firebase/auth'
+import { fetchProducts, selectAllProducts } from './features/shop/products-slice'
 function App() {
-  const user = useAppSelector(state => state.user.user)
+  const user = useAppSelector(selectUser)
+  let productStatus = useAppSelector(state => state.shop.status)
+  let authStatus = useAppSelector(state => state.auth.status)
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    let unsubscribeUser = onAuthStateChanged(auth, (userAuth) => {
-      if (userAuth) {
-        dispatch(login({
-          email: userAuth.email,
-          uid: userAuth.uid,
-          displayName: userAuth.displayName,
-          photoUrl: userAuth.photoURL
-        }))
-      } else {
-        dispatch(logout())
-      }
-    })
-    return () => {
-      unsubscribeUser()
-    }
-  }, [])
 
+  useEffect(() => {
+    if (productStatus === 'idle') {
+      dispatch(fetchProducts())
+    }
+  }, [productStatus, dispatch])
+
+  useEffect(() => {
+    if (authStatus === 'idle') {
+      dispatch(fetchUser())
+    }
+
+  }, [authStatus, dispatch])
 
 
   return (
